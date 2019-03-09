@@ -54,7 +54,7 @@ static NSString * const SegmentHeaderViewCollectionViewCellIdentifier = @"Segmen
     if (self = [super initWithFrame:frame]) {
         _selectedIndex = self.originalIndex;
         _height = HGCategoryViewDefaultHeight;
-        _underlineHeight = 1.8;
+        _underlineHeight = 4;
         _cellSpacing = 10;
         _leftAndRightMargin = _cellSpacing;
         self.titleNormalColor = [UIColor grayColor];
@@ -144,9 +144,13 @@ static NSString * const SegmentHeaderViewCollectionViewCellIdentifier = @"Segmen
 - (void)setupMoveLineDefaultLocation {
     CGFloat cellWidth = [self getWidthWithContent:self.titles[0]];
     [self.underline mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_equalTo(cellWidth);
-        make.left.mas_equalTo(self.leftAndRightMargin);
+        make.width.mas_equalTo(16);
+        make.left.mas_equalTo(self.leftAndRightMargin+(cellWidth-16)/2.0);
     }];
+    //    [self.underline mas_updateConstraints:^(MASConstraintMaker *make) {
+    //        make.width.mas_equalTo(cellWidth);
+    //        make.left.mas_equalTo(self.leftAndRightMargin);
+    //    }];
 }
 
 - (void)updateMoveLineLocation {
@@ -155,7 +159,9 @@ static NSString * const SegmentHeaderViewCollectionViewCellIdentifier = @"Segmen
         [self.underline mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self.height - self.underlineHeight - HG_ONE_PIXEL);
             make.height.mas_equalTo(self.underlineHeight);
-            make.width.centerX.equalTo(cell.titleLabel);
+//            make.width.centerX.equalTo(cell.titleLabel);
+            make.width.mas_equalTo(16);
+            make.centerX.equalTo(cell.titleLabel);
         }];
         [self.collectionView setNeedsLayout];
         [self.collectionView layoutIfNeeded];
@@ -247,6 +253,8 @@ static NSString * const SegmentHeaderViewCollectionViewCellIdentifier = @"Segmen
     [self.underline mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.height - self.underlineHeight - HG_ONE_PIXEL);
     }];
+    self.underline.layer.cornerRadius = underlineHeight/2.0;
+    self.underline.clipsToBounds = YES;
 }
 
 - (void)setCellSpacing:(CGFloat)cellSpacing {
