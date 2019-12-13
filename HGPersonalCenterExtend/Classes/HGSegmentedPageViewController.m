@@ -52,7 +52,10 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf.scrollView setContentOffset:CGPointMake(index * kWidth, 0) animated:NO];
         strongSelf.currentPageViewController = strongSelf.pageViewControllers[index];
-        self.selectedIndex = index;
+        if ([strongSelf.delegate respondsToSelector:@selector(segmentedPageViewControllerSelectedPageIndex:)]) {
+            [strongSelf.delegate segmentedPageViewControllerSelectedPageIndex:index];
+        }
+        strongSelf.selectedIndex = index;
     };
 }
 

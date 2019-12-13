@@ -15,6 +15,7 @@
 - (void)segmentedPageViewControllerWillBeginDragging;
 - (void)segmentedPageViewControllerDidEndDragging;
 - (void)segmentedPageViewControllerDidEndDeceleratingWithPageIndex:(NSInteger)index;
+- (void)segmentedPageViewControllerSelectedPageIndex:(NSInteger)index;
 @end
 
 @interface HGSegmentedPageViewController : UIViewController
